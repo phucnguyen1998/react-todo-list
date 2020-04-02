@@ -30,41 +30,61 @@ class App extends Component {
     });
   }
 
-  generateData = () =>{
-      let tasks = [
-        {
-          id: randomstring.generate(7),
-          name: 'hoc lap trinh',
-          status: true
-        },
-        {
-          id: randomstring.generate(7) ,
-          name: 'Di choi',
-          status: false
-        },
-        {
-          id: randomstring.generate(7) ,
-          name: 'Xem phim',
-          status: true
-        }
-      ]
-
-    this.setState({
-      task: tasks
-    });
-
-    localStorage.setItem('tasks', JSON.stringify(tasks))
-  }
-
   onCloseForm = () => {
     this.setState({
       isDisplayForm: false
     });
   }
 
+  onSubmit = (data) => {
+    data.id = randomstring.generate(7);
+    let {tasks} = this.state;
+    tasks.push(data);
+    this.setState({
+      tasks: tasks
+    });
+    localStorage.setItem('tasks',JSON.stringify(tasks)); 
+  }
+
+  onUpdateStatus = (id) => {
+    let {tasks} = this.state;
+    let index = this.findIndex(id);
+    if(index !== -1){
+      tasks[index].status = !tasks[index].status;
+      this.setState({
+        tasks: tasks
+      });
+      localStorage.setItem('tasks',JSON.stringify(tasks));
+    }
+  }
+
+  findIndex = (id) => {
+    let {tasks} = this.state;
+    let result = -1;
+    tasks.forEach((task,index) => { 
+      if(task.id === id){
+        result = index;
+      }
+    });
+    return result;
+  }
+
+  onDelete = (id) => {
+    let {tasks} = this.state;
+    let index = this.findIndex(id);
+    if(index !== -1){
+      tasks.splice(index, 1)
+      this.setState({
+        tasks: tasks
+      });
+      localStorage.setItem('tasks',JSON.stringify(tasks));
+    }
+    this.onCloseForm()
+  }
+
   render() {
     let {tasks, isDisplayForm} = this.state;
-    let elmTaskForm = isDisplayForm === true ? <TaskForm onCloseForm={() => this.onCloseForm()}/> : '';
+    let elmTaskForm = isDisplayForm === true ? <TaskForm onSubmit={this.onSubmit} onCloseForm={() => this.onCloseForm()}/> : '';
     return (
       <div className="container">
         <div className="text-center">
@@ -79,15 +99,12 @@ class App extends Component {
                 <button type="button" className="btn btn-primary" onClick={() => this.onToggleForm()}>
                     <span className="fa fa-plus mr-5"></span>Thêm Công Việc
                 </button>
-                <button type="button" className="btn btn-danger ml-5" onClick={() => this.generateData()}>
-                    Generate Data
-                </button>
                 {/* Seach - srort */}
                 <Control/>
                 <div className="row mt-15">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-15">
                         {/* List */}
-                        <TaskList tasks= {tasks}/>
+                        <TaskList onUpdateStatus={this.onUpdateStatus} onDelete={this.onDelete} tasks={tasks}/>
                     </div>
                 </div>
             </div>
