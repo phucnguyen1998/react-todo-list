@@ -5,6 +5,7 @@ class TaskForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id:'',
             name: '',
             status: false
         }
@@ -37,16 +38,29 @@ class TaskForm extends Component {
 
     onClear = () => {
         this.setState({
+            id: '',
             name: '',
             status: false
         });
     }
 
-  render() {
+    
+    componentWillMount() {
+        if(this.props.task){
+            this.setState({
+                id: this.props.task.id,
+                name: this.props.task.name,
+                status: this.props.task.status
+            });
+            //console.log(this.state);
+        }
+    }
+    
+  render() { 
     return (
         <div className="panel panel-warning">
             <div className="panel-heading">
-                <h3 className="panel-title">Thêm Công Việc
+                <h3 className="panel-title">{this.state.id !== '' ? 'Cập nhật công việc' : 'Thêm công việc'}
                     <span className="fa fa-times-circle text-right" onClick={this.onCloseForm}></span>
                 </h3>
             </div>

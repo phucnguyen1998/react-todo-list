@@ -10,7 +10,8 @@ class App extends Component {
     super(props);
     this.state = {
       tasks: [], // id: duy nhat khong trung, name, status
-      isDisplayForm: false
+      isDisplayForm: false,
+      taskEditing: null
     }
   }
   
@@ -32,16 +33,30 @@ class App extends Component {
 
   onCloseForm = () => {
     this.setState({
-      isDisplayForm: false
+      isDisplayForm: false,
     });
   }
 
-  onSubmit = (data) => {
-    data.id = randomstring.generate(7);
-    let {tasks} = this.state;
-    tasks.push(data);
+  onShowForm = () => {
     this.setState({
-      tasks: tasks
+      isDisplayForm: true
+    });
+  }
+
+  onSubmit = (data) => {  
+    let {tasks} = this.state;
+    if(data.id === ''){
+      // Add
+      data.id = randomstring.generate(7);
+      tasks.push(data);
+    }else{
+      // Editing
+      let index = this.findIndex(data.id);
+      tasks[index] = data;
+    }
+    this.setState({
+      tasks: tasks,
+      taskEditing: null
     });
     localStorage.setItem('tasks',JSON.stringify(tasks)); 
   }
@@ -82,9 +97,19 @@ class App extends Component {
     this.onCloseForm()
   }
 
+  onUpdate = (id) => {
+    let {tasks} = this.state;
+    let index = this.findIndex(id);
+    let taskEditing = tasks[index];
+    this.setState({
+      taskEditing: taskEditing
+    });
+    this.onShowForm();
+  }
+
   render() {
-    let {tasks, isDisplayForm} = this.state;
-    let elmTaskForm = isDisplayForm === true ? <TaskForm onSubmit={this.onSubmit} onCloseForm={() => this.onCloseForm()}/> : '';
+    let {tasks, isDisplayForm, taskEditing} = this.state;
+    let elmTaskForm = isDisplayForm === true ? <TaskForm task={taskEditing} onSubmit={this.onSubmit} onCloseForm={() => this.onCloseForm()}/> : '';
     return (
       <div className="container">
         <div className="text-center">
@@ -104,7 +129,7 @@ class App extends Component {
                 <div className="row mt-15">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-15">
                         {/* List */}
-                        <TaskList onUpdateStatus={this.onUpdateStatus} onDelete={this.onDelete} tasks={tasks}/>
+                        <TaskList onUpdateStatus={this.onUpdateStatus} onUpdate={this.onUpdate} onDelete={this.onDelete} tasks={tasks}/>
                     </div>
                 </div>
             </div>

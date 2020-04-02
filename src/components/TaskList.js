@@ -6,7 +6,7 @@ class TaskList extends Component {
     render() {
         let {tasks} = this.props;
         let elmTask = tasks.map((task,index) => {
-            return (<TaskItem onDelete={this.props.onDelete} onUpdateStatus={this.props.onUpdateStatus} key={task.id} index={index} task={task} />)
+            return (<TaskItem onUpdate={this.props.onUpdate} onDelete={this.props.onDelete} onUpdateStatus={this.props.onUpdateStatus} key={task.id} index={index} task={task} />)
         })
         return (
             <table className="table table-bordered table-hover">
