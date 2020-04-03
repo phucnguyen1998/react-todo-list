@@ -4,6 +4,7 @@ import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
 import randomstring from 'randomstring';
+import _ from 'lodash';
 class App extends Component {
 
   constructor(props) {
@@ -78,7 +79,10 @@ class App extends Component {
 
   onUpdateStatus = (id) => {
     let {tasks} = this.state;
-    let index = this.findIndex(id);
+    //let index = this.findIndex(id);
+    let index = _.findIndex(tasks,(task)=>{
+      return task.id === id
+    })
     if(index !== -1){
       tasks[index].status = !tasks[index].status;
       this.setState({
@@ -165,7 +169,11 @@ class App extends Component {
     }
 
     if(keyword){
-      tasks = tasks.filter((task) => {
+      // tasks = tasks.filter((task) => {
+      //   return task.name.toLowerCase().indexOf(keyword) !== -1;
+      // })
+
+      tasks = _.filter(tasks, (task)=>{
         return task.name.toLowerCase().indexOf(keyword) !== -1;
       })
     }
