@@ -8,9 +8,9 @@ class Control extends Component {
         return (
             <div className="row mt-15">  
                 {/* Seach */}
-                <Seach/>
+                <Seach onSearch = {this.props.onSearch} />
                 {/* Sort */}
-                <Sort />
+                <Sort sortBy= {this.props.sortBy} sortValue={this.props.sortValue} onSort = {this.props.onSort}/>
             </div>
         );
     }

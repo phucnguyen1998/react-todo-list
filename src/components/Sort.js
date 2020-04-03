@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class Sort extends Component {
+    
+    onClick = (sortBy, sortValue) => {
+       this.props.onSort(sortBy,sortValue)
+    }
 
     render() {
         return (
@@ -10,23 +14,31 @@ class Sort extends Component {
                         Sắp Xếp <span className="fa fa-caret-square-o-down ml-5"></span>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li>
+                        <li className="d-flex" onClick={() => this.onClick('name',1)}>
                             <a role="button">
-                                        <span className="fa fa-sort-alpha-asc pr-5">
-                                            Tên A-Z
-                                        </span>
-                                    </a>
+                                <span className="fa fa-sort-alpha-asc pr-5">
+                                    Tên A-Z
+                                </span>
+                            </a>
+                            {(this.props.sortBy === 'name' && this.props.sortValue === 1) ? <i className="fa fa-check m-auto" aria-hidden="true"></i> : ''}
                         </li>
-                        <li>
+                        <li className="d-flex" onClick={() => this.onClick('name',-1)}>
                             <a role="button">
-                                        <span className="fa fa-sort-alpha-desc pr-5">
-                                            Tên Z-A
-                                        </span>
-                                    </a>
+                                <span className="fa fa-sort-alpha-desc pr-5">
+                                    Tên Z-A
+                                </span>
+                            </a>
+                            {(this.props.sortBy === 'name' && this.props.sortValue === -1) ? <i className="fa fa-check m-auto" aria-hidden="true"></i> : ''}
                         </li>
                         <li role="separator" className="divider"></li>
-                        <li><a role="button">Trạng Thái Kích Hoạt</a></li>
-                        <li><a role="button">Trạng Thái Ẩn</a></li>
+                        <li className="d-flex" onClick={() => this.onClick('status',1)}>
+                            <a role="button">T.T Kích Hoạt</a>
+                            {(this.props.sortBy === 'status' && this.props.sortValue === 1) ? <i className="fa fa-check m-auto" aria-hidden="true"></i> : ''}
+                        </li>
+                        <li className="d-flex" onClick={() => this.onClick('status',-1)} >
+                            <a role="button">Trạng Thái Ẩn</a>
+                            {(this.props.sortBy === 'status' && this.props.sortValue === -1) ? <i className="fa fa-check m-auto" aria-hidden="true"></i> : ''}
+                        </li>
                     </ul>
                 </div>
             </div>

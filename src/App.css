@@ -1,2 +1,17 @@
 .mt-15{margin-top: 15px;}
 .text-right{float: right;}
+.sort_selected{
+    content: \f00c;
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    margin: 0 0 0 10px;
+    display: inline-block;
+}
+
+.d-flex{
+    display: flex;
+}
+.m-auto{
+    margin: auto;
+}
