@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Sort extends Component {
     
@@ -15,28 +16,28 @@ class Sort extends Component {
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li className="d-flex" onClick={() => this.onClick('name',1)}>
-                            <a role="button">
+                            <Link to="/" role="button">
                                 <span className="fa fa-sort-alpha-asc pr-5">
                                     Tên A-Z
                                 </span>
-                            </a>
+                            </Link>
                             {(this.props.sortBy === 'name' && this.props.sortValue === 1) ? <i className="fa fa-check m-auto" aria-hidden="true"></i> : ''}
                         </li>
                         <li className="d-flex" onClick={() => this.onClick('name',-1)}>
-                            <a role="button">
+                            <Link to="/" role="button">
                                 <span className="fa fa-sort-alpha-desc pr-5">
                                     Tên Z-A
                                 </span>
-                            </a>
+                            </Link>
                             {(this.props.sortBy === 'name' && this.props.sortValue === -1) ? <i className="fa fa-check m-auto" aria-hidden="true"></i> : ''}
                         </li>
                         <li role="separator" className="divider"></li>
                         <li className="d-flex" onClick={() => this.onClick('status',1)}>
-                            <a role="button">T.T Kích Hoạt</a>
+                            <Link to="/" role="button">T.T Kích Hoạt</Link>
                             {(this.props.sortBy === 'status' && this.props.sortValue === 1) ? <i className="fa fa-check m-auto" aria-hidden="true"></i> : ''}
                         </li>
                         <li className="d-flex" onClick={() => this.onClick('status',-1)} >
-                            <a role="button">Trạng Thái Ẩn</a>
+                            <Link to="/" role="button">Trạng Thái Ẩn</Link>
                             {(this.props.sortBy === 'status' && this.props.sortValue === -1) ? <i className="fa fa-check m-auto" aria-hidden="true"></i> : ''}
                         </li>
                     </ul>

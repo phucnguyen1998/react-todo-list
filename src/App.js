@@ -5,6 +5,9 @@ import Control from './components/Control';
 import TaskList from './components/TaskList';
 import randomstring from 'randomstring';
 import _ from 'lodash';
+import {
+  BrowserRouter as Router
+} from "react-router-dom";
 class App extends Component {
 
   constructor(props) {
@@ -195,6 +198,7 @@ class App extends Component {
     
     let elmTaskForm = isDisplayForm === true ? <TaskForm task={taskEditing} onSubmit={this.onSubmit} onCloseForm={() => this.onCloseForm()}/> : '';
     return (
+    <Router>
       <div className="container">
         <div className="text-center">
             <h1>Quản Lý Công Việc</h1>
@@ -229,6 +233,7 @@ class App extends Component {
             </div>
         </div>
       </div>
+    </Router>
     );
   }
 }
